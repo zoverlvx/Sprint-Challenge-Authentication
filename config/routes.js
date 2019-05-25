@@ -29,6 +29,7 @@ function login(req, res) {
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)) {
                 const token = tokenService.generateToken(user);
+                // req.headers.Authorization = token ???
                 res.status(200).json({
                     success: true,
                     token
@@ -37,7 +38,7 @@ function login(req, res) {
             if (!user || !bcrypt.compareSync(password, user.password)) {
                 res.status(401).json({success: false, message: "Invalid credentials"});
             }
-        })
+        }).catch(error => res.status(500).json(error));
 }
 
 function getJokes(req, res) {

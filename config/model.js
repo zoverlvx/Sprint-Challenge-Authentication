@@ -4,8 +4,8 @@ module.exports = function(table) {
     function findBy(filter) {
         return db(table).where(filter);
     }
-    function add(user) {
-        const [id] = db(table).insert(user);
+    async function add(user) {
+        const [id] = await db(table).insert(user);
         return findById(id);
     }
     function findById(id) {
